@@ -13,8 +13,8 @@ def procesar_opcion(opcion):
     if opcion == '1':
         print("Opción 1 seleccionada.")
         clave = input("Insertando Plan. Ingrese la clave (Letra Mayúscula):")
-        carrera = input("Insertando Plan. Ingrese la carrera (número):")
-        materia = input("Insertando Plan. Ingrese la materia (número):")
+        carrera = int(input("Insertando Plan. Ingrese la carrera (número):"))
+        materia = int(input("Insertando Plan. Ingrese la materia (número):"))
         fecha_alta = input("Insertando Plan. Ingrese la fecha de alta (AAAA/MM/DD):")
         fechabaja = input("Insertando Plan. Ingrese la fecha de baja (AAAA/MM/DD):")
         area = input("Insertando Plan. Ingrese el area (puede estar vacio):")
@@ -23,7 +23,7 @@ def procesar_opcion(opcion):
         requi2 = input("Insertando Plan. Ingrese el Requisito 2 (Número, puede estar vacio):")
         requi3 = input("Insertando Plan. Ingrese el Requisito 3 (Número, puede estar vacio):")
         requi4 = input("Insertando Plan. Ingrese el Requisito 4 (Número, puede estar vacio):")
-        semest = input("Insertando Plan. Ingrese el Semestre (número):")
+        semest = int(input("Insertando Plan. Ingrese el Semestre (número):"))
         crear_plan(clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
     elif opcion == '2':
         print("Opción 2 seleccionada.")

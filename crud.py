@@ -6,6 +6,8 @@ db = client['software']
 collection = db['PLANES']
 carreras = db['CARRERAS']
 materias = db['MATERIAS']
+def buscar_materia_por_clave(clave_materia):
+    return materias.find_one({'CLAVE': clave_materia})
 
 def verificar_carrera(clave_carrera):
     carrera_existente = carreras.find_one({'CLAVE': clave_carrera})
@@ -45,14 +47,14 @@ def verificar_plan(plan_id):
 def crear_plan(clave, carrera, materia, fecha_alta, fechabaja=None, area=None, reqsim=None, requi1=None, requi2=None, requi3=None, requi4=None, semest=None):
     if not verificar_carrera(carrera):
         print("No se pudo crear el plan. Verifica la carrera.")
-        return
+        return 0
     if not verificar_materia(materia):
         print("No se pudo crear el plan. Verifica la materia.")
-        return
+        return 0 
     requisitos = [reqsim, requi1, requi2, requi3, requi4]
     if not verificar_requisitos(requisitos):
         print("No se pudo crear el plan. Verifica los requisitos.")
-        return
+        return 0
     
     nuevo_plan = {
         'CLAVE': clave,
@@ -61,11 +63,13 @@ def crear_plan(clave, carrera, materia, fecha_alta, fechabaja=None, area=None, r
         'FECHAALTA': fecha_alta,
         'FECHABAJA': fechabaja,
         'AREA': area,
-        'REQSIM': reqsim,
-        'REQUI1': requi1,
-        'REQUI2': requi2,
-        'REQUI3': requi3,
-        'REQUI4': requi4,
+        'REQSIM': materias.find_one({'CLAVE': reqsim}) if reqsim else None,
+        # Si requi1 no es None, entonces buscar la materia en la colección de materias
+        # Si no, asignar None
+        'REQUI1': materias.find_one({'CLAVE': requi1}) if requi1 else None,
+        'REQUI2': materias.find_one({'CLAVE': requi2}) if requi2 else None,
+        'REQUI3': materias.find_one({'CLAVE': requi3}) if requi3 else None,
+        'REQUI4': materias.find_one({'CLAVE': requi4}) if requi4 else None,
         'SEMEST': semest
     }
     resultado = collection.insert_one(nuevo_plan)
