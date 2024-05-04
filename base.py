@@ -32,7 +32,7 @@ while loop:
             for req_field in ['REQSIM', 'REQUI1', 'REQUI2', 'REQUI3', 'REQUI4']:
                 if not pd.isnull(record[req_field]):
                     # Buscar el documento de la materia referenciada
-                    materia_ref = next(m for m in materias_dict if m['MATERIA'] == record[req_field])
+                    materia_ref = next(m['MATERIA'] for m in materias_dict if m['MATERIA'] == record[req_field])
                     # Agregar la materia referenciada al documento principal
                     record[req_field] = materia_ref
 

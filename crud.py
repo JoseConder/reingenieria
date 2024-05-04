@@ -125,16 +125,9 @@ def mostrar_planes():
     client = MongoClient('localhost', 27017)  
     db = client['software']
     collection = db['PLANES']
-
     doc = collection.find()
     print("Planes:")
     for d in doc:
-        requisitos = []
-        for req in [d['REQSIM'], d['REQUI1'], d['REQUI2'], d['REQUI3'], d['REQUI4']]:
-            if isinstance(req, dict):
-                requisitos.append(req['MATERIA'])
-        requisitos_str = ', '.join(map(str, requisitos))
-        print(f"  Clave: {d['CLAVE']} - Carrera: {d['CARRERA']} - Materia: {d['MATERIA']} - Fecha de Alta: {d['FECHAALTA']} - Fecha de Baja: {d['FECHABAJA']} - Requisitos: {requisitos_str} - Semestre: {d['SEMEST']} - Area: {d['AREA']}")
+        print(f"  Clave: {d['CLAVE']} - Carrera: {d['CARRERA']} - Materia: {d['MATERIA']} - Fecha de Alta: {d['FECHAALTA']} - Fecha de Baja: {d['FECHABAJA']} - Requisitos: {d['REQSIM']} - Requisito 1: {d['REQUI1']} - Requisito 2: {d['REQUI2']} - Requisito 3: {d['REQUI3']} - Requisito 4: {d['REQUI4']} - Semestre: {d['SEMEST']} - Area: {d['AREA']}")
     client.close()
-
 
