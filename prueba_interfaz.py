@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
-from crud import crear_plan, mostrar_planes
+from crud import crear_plan, mostrar_planes,eliminar_plan,get_planID
 from pymongo import MongoClient
 
 def mostrar_planes_db():
@@ -18,7 +18,7 @@ def mostrar_planes_db():
 
     # Mostrar los planes en la pestaña de ver planes
     for plan in planes:
-        ver_planes_treeview.insert('', 'end', values=(plan['CLAVE'], plan['CARRERA'], plan['MATERIA']))
+        ver_planes_treeview.insert('', 'end', values=(plan['CLAVE'], plan['CARRERA'], plan['MATERIA'],plan['FECHAALTA'],plan['FECHABAJA'],plan['REQSIM'],plan['REQUI1'],plan['REQUI2'],plan['REQUI3'],plan['REQUI4'],plan['SEMEST'],plan['AREA']))
 
     client.close()
 
@@ -67,6 +67,25 @@ def insertar_plan():
     except Exception as e:
         messagebox.showerror("Error", f"No se pudo insertar el plan: {e}")
 
+
+def eliminar_plan_ui():
+    # Obtener la carrera y la materia ingresadas por el usuario
+    carrera = int(eliminar_carrera_entry.get())
+    materia = int(eliminar_materia_entry.get())
+
+    # Obtener el ID del plan
+    plan_id = get_planID(carrera, materia)
+
+    if plan_id:
+        # Eliminar el plan
+        eliminar_plan(plan_id)
+        messagebox.showinfo("Éxito", "Plan eliminado correctamente")
+        # Actualizar la vista de los planes
+        mostrar_planes_db()
+    else:
+        messagebox.showerror("Error", "No se encontró ningún plan con la carrera y materia especificadas")
+
+
 # Crear ventana principal
 root = tk.Tk()
 root.title("Sistema de Gestión de Planes")
@@ -84,74 +103,88 @@ def crear_pestana(notebook, titulo):
 # Pestaña para Insertar Plan
 insertar_frame = crear_pestana(notebook, "Insertar Plan")
 
-tk.Label(insertar_frame, text="Clave:").grid(row=0, column=0)
-clave_entry = tk.Entry(insertar_frame)
-clave_entry.grid(row=0, column=1)
+# Función para crear y alinear un label y un entry en la pestaña de insertar plan
+def crear_label_entry_insertar(text):
+    frame = tk.Frame(insertar_frame)
+    frame.pack(pady=5)
 
-tk.Label(insertar_frame, text="Carrera:").grid(row=1, column=0)
-carrera_entry = tk.Entry(insertar_frame)
-carrera_entry.grid(row=1, column=1)
+    label = tk.Label(frame, text=text)
+    label.pack(side="left", padx=(10, 5))
 
-tk.Label(insertar_frame, text="Materia:").grid(row=2, column=0)
-materia_entry = tk.Entry(insertar_frame)
-materia_entry.grid(row=2, column=1)
+    entry = tk.Entry(frame)
+    entry.pack(side="left", padx=(0, 10))
+    return entry
 
-tk.Label(insertar_frame, text="Fecha de Alta (AAAA/MM/DD):").grid(row=3, column=0)
-fecha_alta_entry = tk.Entry(insertar_frame)
-fecha_alta_entry.grid(row=3, column=1)
-
-tk.Label(insertar_frame, text="Fecha de Baja (AAAA/MM/DD):").grid(row=4, column=0)
-fechabaja_entry = tk.Entry(insertar_frame)
-fechabaja_entry.grid(row=4, column=1)
-
-tk.Label(insertar_frame, text="Área:").grid(row=5, column=0)
-area_entry = tk.Entry(insertar_frame)
-area_entry.grid(row=5, column=1)
-
-tk.Label(insertar_frame, text="Requisito Similar:").grid(row=6, column=0)
-reqsim_entry = tk.Entry(insertar_frame)
-reqsim_entry.grid(row=6, column=1)
-
-tk.Label(insertar_frame, text="Requisito 1:").grid(row=7, column=0)
-requi1_entry = tk.Entry(insertar_frame)
-requi1_entry.grid(row=7, column=1)
-
-tk.Label(insertar_frame, text="Requisito 2:").grid(row=8, column=0)
-requi2_entry = tk.Entry(insertar_frame)
-requi2_entry.grid(row=8, column=1)
-
-tk.Label(insertar_frame, text="Requisito 3:").grid(row=9, column=0)
-requi3_entry = tk.Entry(insertar_frame)
-requi3_entry.grid(row=9, column=1)
-
-tk.Label(insertar_frame, text="Requisito 4:").grid(row=10, column=0)
-requi4_entry = tk.Entry(insertar_frame)
-requi4_entry.grid(row=10, column=1)
-
-tk.Label(insertar_frame, text="Semestre:").grid(row=11, column=0)
-semest_entry = tk.Entry(insertar_frame)
-semest_entry.grid(row=11, column=1)
+clave_entry = crear_label_entry_insertar("Clave:")
+carrera_entry = crear_label_entry_insertar("Carrera:")
+materia_entry = crear_label_entry_insertar("Materia:")
+fecha_alta_entry = crear_label_entry_insertar("Fecha de Alta (AAAA/MM/DD):")
+fechabaja_entry = crear_label_entry_insertar("Fecha de Baja (AAAA/MM/DD):")
+area_entry = crear_label_entry_insertar("Área:")
+reqsim_entry = crear_label_entry_insertar("Requisito Similar:")
+requi1_entry = crear_label_entry_insertar("Requisito 1:")
+requi2_entry = crear_label_entry_insertar("Requisito 2:")
+requi3_entry = crear_label_entry_insertar("Requisito 3:")
+requi4_entry = crear_label_entry_insertar("Requisito 4:")
+semest_entry = crear_label_entry_insertar("Semestre:")
 
 insertar_btn = tk.Button(insertar_frame, text="Insertar Plan", command=insertar_plan)
-insertar_btn.grid(row=12, column=0, columnspan=2, pady=10)
+insertar_btn.pack(pady=5)
 
 # Pestaña para Actualizar Plan (vacía por ahora)
 actualizar_frame = crear_pestana(notebook, "Actualizar Plan")
 
 # Pestaña para Eliminar Plan (vacía por ahora)
 eliminar_frame = crear_pestana(notebook, "Eliminar Plan")
+# Función para crear y alinear un label y un entry en la pestaña de eliminar plan
+def crear_label_entry_eliminar(text):
+    frame = tk.Frame(eliminar_frame)
+    frame.pack(pady=5)
+
+    label = tk.Label(frame, text=text)
+    label.pack(side="left", padx=(10, 5))
+
+    entry = tk.Entry(frame)
+    entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
+    return entry
+
+eliminar_carrera_entry = crear_label_entry_eliminar("Carrera:")
+eliminar_materia_entry = crear_label_entry_eliminar("Materia:")
+
+eliminar_btn = tk.Button(eliminar_frame, text="Eliminar Plan", command=eliminar_plan)
+eliminar_btn.pack(pady=5)
 
 # Pestaña para Ver Planes
 ver_planes_frame = crear_pestana(notebook, "Ver Planes")
-ver_planes_treeview = ttk.Treeview(ver_planes_frame, columns=('clave', 'carrera', 'materia'))
+ver_planes_treeview = ttk.Treeview(ver_planes_frame, columns=('clave', 'carrera', 'materia','fechaAlta','fechaBaja','reqsim','reqsim1','reqsim2','reqsim3','reqsim4','semest','area'))
 ver_planes_treeview.heading('#0', text='')
 ver_planes_treeview.heading('clave', text='Clave')
 ver_planes_treeview.heading('carrera', text='Carrera')
 ver_planes_treeview.heading('materia', text='Materia')
+ver_planes_treeview.heading('fechaAlta', text='FechaAlta')
+ver_planes_treeview.heading('fechaBaja', text='FechaBaja')
+ver_planes_treeview.heading('reqsim', text='Reqsim')
+ver_planes_treeview.heading('reqsim1', text='Reqsim1')
+ver_planes_treeview.heading('reqsim2', text='Reqsim2')
+ver_planes_treeview.heading('reqsim3', text='Reqsim3')
+ver_planes_treeview.heading('reqsim4', text='Reqsim4')
+ver_planes_treeview.heading('semest', text='Semest')
+ver_planes_treeview.heading('area', text='Area')
 ver_planes_treeview.column('#0', width=0, stretch=tk.NO)
 ver_planes_treeview.column('clave', anchor=tk.W, width=100)
 ver_planes_treeview.column('carrera', anchor=tk.W, width=100)
 ver_planes_treeview.column('materia', anchor=tk.W, width=100)
+ver_planes_treeview.column('fechaAlta', anchor=tk.W, width=100)
+ver_planes_treeview.column('fechaBaja', anchor=tk.W, width=100)
+ver_planes_treeview.column('reqsim', anchor=tk.W, width=100)
+ver_planes_treeview.column('reqsim1', anchor=tk.W, width=100)
+ver_planes_treeview.column('reqsim2', anchor=tk.W, width=100)
+ver_planes_treeview.column('reqsim3', anchor=tk.W, width=100)
+ver_planes_treeview.column('reqsim4', anchor=tk.W, width=100)
+ver_planes_treeview.column('semest', anchor=tk.W, width=100)
+ver_planes_treeview.column('area', anchor=tk.W, width=100)
+
+
 ver_planes_treeview.pack(fill=tk.BOTH, expand=True)
 # Llamar a la función para mostrar los planes
 mostrar_planes_db()

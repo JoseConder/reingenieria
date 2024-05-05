@@ -75,7 +75,7 @@ def crear_plan(clave, carrera, materia, fecha_alta, fechabaja=None, area=None, r
     resultado = collection.insert_one(nuevo_plan)
     print(f"Nuevo plan creado con el ID: {resultado.inserted_id}, para la materia: {materia}")
 
-def actualizar_plan(plan_id, clave, carrera, materia, fecha_alta, fechabaja=None, area=None, reqsim=None, requi1=None, requi2=None, requi3=None, requi4=None, semest=None):
+def actualizar_plan_bd(plan_id, clave, carrera, materia, fecha_alta, fechabaja=None, area=None, reqsim=None, requi1=None, requi2=None, requi3=None, requi4=None, semest=None):
     if not verificar_plan(plan_id):
         print("No se pudo actualizar el plan. Verifica el plan.")
         return
