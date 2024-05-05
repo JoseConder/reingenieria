@@ -63,19 +63,19 @@ def crear_plan(clave, carrera, materia, fecha_alta, fechabaja=None, area=None, r
         'FECHAALTA': fecha_alta,
         'FECHABAJA': fechabaja,
         'AREA': area,
-        'REQSIM': materias.find_one({'CLAVE': reqsim}) if reqsim else None,
+        'REQSIM': materias.find_one({'CLAVE': reqsim})['CLAVE'] if reqsim else None,
         # Si requi1 no es None, entonces buscar la materia en la colección de materias
         # Si no, asignar None
-        'REQUI1': materias.find_one({'CLAVE': requi1}) if requi1 else None,
-        'REQUI2': materias.find_one({'CLAVE': requi2}) if requi2 else None,
-        'REQUI3': materias.find_one({'CLAVE': requi3}) if requi3 else None,
-        'REQUI4': materias.find_one({'CLAVE': requi4}) if requi4 else None,
+        'REQUI1': materias.find_one({'CLAVE': requi1})['CLAVE'] if requi1 else None,
+        'REQUI2': materias.find_one({'CLAVE': requi2})['CLAVE'] if requi2 else None,
+        'REQUI3': materias.find_one({'CLAVE': requi3})['CLAVE'] if requi3 else None,
+        'REQUI4': materias.find_one({'CLAVE': requi4})['CLAVE'] if requi4 else None,
         'SEMEST': semest
     }
     resultado = collection.insert_one(nuevo_plan)
     print(f"Nuevo plan creado con el ID: {resultado.inserted_id}, para la materia: {materia}")
 
-def actualizar_plan_bd(plan_id, clave, carrera, materia, fecha_alta, fechabaja=None, area=None, reqsim=None, requi1=None, requi2=None, requi3=None, requi4=None, semest=None):
+def actualizar_plan(plan_id, clave, carrera, materia, fecha_alta, fechabaja=None, area=None, reqsim=None, requi1=None, requi2=None, requi3=None, requi4=None, semest=None):
     if not verificar_plan(plan_id):
         print("No se pudo actualizar el plan. Verifica el plan.")
         return

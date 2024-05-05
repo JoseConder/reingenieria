@@ -63,9 +63,10 @@ def insertar_plan():
             return
         else:   
             messagebox.showinfo("Éxito", "Plan insertado correctamente")
-            mostrar_planes()
+            mostrar_planes_db()
     except Exception as e:
         messagebox.showerror("Error", f"No se pudo insertar el plan: {e}")
+    
 
 
 def eliminar_plan_ui():
@@ -74,7 +75,9 @@ def eliminar_plan_ui():
     materia = int(eliminar_materia_entry.get())
 
     # Obtener el ID del plan
+    print(carrera, materia)
     plan_id = get_planID(carrera, materia)
+    print(plan_id)
 
     if plan_id:
         # Eliminar el plan
@@ -151,7 +154,7 @@ def crear_label_entry_eliminar(text):
 eliminar_carrera_entry = crear_label_entry_eliminar("Carrera:")
 eliminar_materia_entry = crear_label_entry_eliminar("Materia:")
 
-eliminar_btn = tk.Button(eliminar_frame, text="Eliminar Plan", command=eliminar_plan)
+eliminar_btn = tk.Button(eliminar_frame, text="Eliminar Plan", command=eliminar_plan_ui)
 eliminar_btn.pack(pady=5)
 
 # Pestaña para Ver Planes
