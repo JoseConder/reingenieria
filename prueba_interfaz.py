@@ -69,7 +69,7 @@ def insertar_plan():
     
 
 def actualizar_plan_check():
-    clave = clave_entry.get()
+    clave = clave_entry_a.get()
     carrera = int(carrera_entry_a.get())
     materia = int(materia_entry_a.get())
     fecha_alta = fecha_alta_entry_a.get()
