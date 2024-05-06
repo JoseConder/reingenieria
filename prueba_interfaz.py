@@ -142,10 +142,10 @@ def crear_label_entry_insertar(text):
     entry.pack(side="left", padx=(0, 10))
     return entry
 
-clave_entry = crear_label_entry_insertar("Clave:")
-carrera_entry = crear_label_entry_insertar("Carrera:")
-materia_entry = crear_label_entry_insertar("Materia:")
-fecha_alta_entry = crear_label_entry_insertar("Fecha de Alta (AAAA/MM/DD):")
+clave_entry = crear_label_entry_insertar("*Clave:")
+carrera_entry = crear_label_entry_insertar("*Carrera:")
+materia_entry = crear_label_entry_insertar("*Materia:")
+fecha_alta_entry = crear_label_entry_insertar("*Fecha de Alta (AAAA/MM/DD):")
 fechabaja_entry = crear_label_entry_insertar("Fecha de Baja (AAAA/MM/DD):")
 area_entry = crear_label_entry_insertar("Área:")
 reqsim_entry = crear_label_entry_insertar("Requisito Similar:")
@@ -153,7 +153,7 @@ requi1_entry = crear_label_entry_insertar("Requisito 1:")
 requi2_entry = crear_label_entry_insertar("Requisito 2:")
 requi3_entry = crear_label_entry_insertar("Requisito 3:")
 requi4_entry = crear_label_entry_insertar("Requisito 4:")
-semest_entry = crear_label_entry_insertar("Semestre:")
+semest_entry = crear_label_entry_insertar("*Semestre:")
 
 insertar_btn = tk.Button(insertar_frame, text="Insertar Plan", command=insertar_plan)
 insertar_btn.pack(pady=5)
@@ -172,10 +172,10 @@ def crear_label_entry_actualizar(text):
     entry.pack(side="left", padx=(0, 10))
     return entry
 
-clave_entry_a = crear_label_entry_actualizar("Clave:")
-carrera_entry_a = crear_label_entry_actualizar("Carrera:")
-materia_entry_a = crear_label_entry_actualizar("Materia:")
-fecha_alta_entry_a = crear_label_entry_actualizar("Fecha de Alta (AAAA/MM/DD):")
+clave_entry_a = crear_label_entry_actualizar("*Clave:")
+carrera_entry_a = crear_label_entry_actualizar("*Carrera:")
+materia_entry_a = crear_label_entry_actualizar("*Materia:")
+fecha_alta_entry_a = crear_label_entry_actualizar("*Fecha de Alta (AAAA/MM/DD):")
 fechabaja_entry_a = crear_label_entry_actualizar("Fecha de Baja (AAAA/MM/DD):")
 area_entry_a = crear_label_entry_actualizar("Área:")
 reqsim_entry_a = crear_label_entry_actualizar("Requisito Similar:")
@@ -183,7 +183,7 @@ requi1_entry_a = crear_label_entry_actualizar("Requisito 1:")
 requi2_entry_a = crear_label_entry_actualizar("Requisito 2:")
 requi3_entry_a = crear_label_entry_actualizar("Requisito 3:")
 requi4_entry_a = crear_label_entry_actualizar("Requisito 4:")
-semest_entry_a = crear_label_entry_actualizar("Semestre:")
+semest_entry_a = crear_label_entry_actualizar("*Semestre:")
 
 insertar_btn = tk.Button(actualizar_frame, text="Actualizar plan", command=actualizar_plan_check)
 insertar_btn.pack(pady=5)
@@ -202,8 +202,8 @@ def crear_label_entry_eliminar(text):
     entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
     return entry
 
-eliminar_carrera_entry = crear_label_entry_eliminar("Carrera:")
-eliminar_materia_entry = crear_label_entry_eliminar("Materia:")
+eliminar_carrera_entry = crear_label_entry_eliminar("*Carrera:")
+eliminar_materia_entry = crear_label_entry_eliminar("*Materia:")
 
 eliminar_btn = tk.Button(eliminar_frame, text="Eliminar Plan", command=eliminar_plan_ui)
 eliminar_btn.pack(pady=5)
