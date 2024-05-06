@@ -68,7 +68,30 @@ def insertar_plan():
         messagebox.showerror("Error", f"No se pudo insertar el plan: {e}")
     
 
+def actualizar_plan():
+    clave = clave_entry.get()
+    carrera = int(carrera_entry_a.get())
+    materia = int(materia_entry_a.get())
+    fecha_alta = fecha_alta_entry_a.get()
+    fechabaja = fechabaja_entry_a.get() or None
+    area = area_entry_a.get() or None
+    reqsim = int(reqsim_entry_a.get()) if reqsim_entry_a.get() else None
+    requi1 = int(requi1_entry_a.get()) if requi1_entry_a.get() else None
+    requi2 = int(requi2_entry_a.get()) if requi2_entry_a.get() else None
+    requi3 = int(requi3_entry_a.get()) if requi3_entry_a.get() else None
+    requi4 = int(requi4_entry_a.get()) if requi4_entry_a.get() else None
+    semest = int(semest_entry_a.get())
 
+    try:
+        plan_creado = actualizar_plan(clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
+        if plan_creado ==0:
+            messagebox.showerror("Error", "No se pudo actualizar el plan")
+            return
+        else:   
+            messagebox.showinfo("Éxito", "Plan actualizado correctamente")
+            mostrar_planes_db()
+    except Exception as e:
+        messagebox.showerror("Error", f"No se pudo actualizar el plan: {e}")
 def eliminar_plan_ui():
     # Obtener la carrera y la materia ingresadas por el usuario
     carrera = int(eliminar_carrera_entry.get())
@@ -136,6 +159,33 @@ insertar_btn.pack(pady=5)
 
 # Pestaña para Actualizar Plan (vacía por ahora)
 actualizar_frame = crear_pestana(notebook, "Actualizar Plan")
+
+def crear_label_entry_actualizar(text):
+    frame = tk.Frame(actualizar_frame)
+    frame.pack(pady=5)
+
+    label = tk.Label(frame, text=text)
+    label.pack(side="left", padx=(10, 5))
+
+    entry = tk.Entry(frame)
+    entry.pack(side="left", padx=(0, 10))
+    return entry
+
+clave_entry_a = crear_label_entry_actualizar("Clave:")
+carrera_entry_a = crear_label_entry_actualizar("Carrera:")
+materia_entry_a = crear_label_entry_actualizar("Materia:")
+fecha_alta_entry_a = crear_label_entry_actualizar("Fecha de Alta (AAAA/MM/DD):")
+fechabaja_entry_a = crear_label_entry_actualizar("Fecha de Baja (AAAA/MM/DD):")
+area_entry_a = crear_label_entry_actualizar("Área:")
+reqsim_entry_a = crear_label_entry_actualizar("Requisito Similar:")
+requi1_entry_a = crear_label_entry_actualizar("Requisito 1:")
+requi2_entry_a = crear_label_entry_actualizar("Requisito 2:")
+requi3_entry_a = crear_label_entry_actualizar("Requisito 3:")
+requi4_entry_a = crear_label_entry_actualizar("Requisito 4:")
+semest_entry_a = crear_label_entry_actualizar("Semestre:")
+
+insertar_btn = tk.Button(actualizar_frame, text="Actualizar plan", command=actualizar_plan)
+insertar_btn.pack(pady=5)
 
 # Pestaña para Eliminar Plan (vacía por ahora)
 eliminar_frame = crear_pestana(notebook, "Eliminar Plan")
