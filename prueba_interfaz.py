@@ -43,75 +43,87 @@ def mostrar_materias_db():
 
     
 def insertar_plan():
-    clave = clave_entry.get()
-    carrera = int(carrera_entry.get())
-    materia = int(materia_entry.get())
-    fecha_alta = fecha_alta_entry.get()
-    fechabaja = fechabaja_entry.get() or None
-    area = area_entry.get() or None
-    reqsim = int(reqsim_entry.get()) if reqsim_entry.get() else None
-    requi1 = int(requi1_entry.get()) if requi1_entry.get() else None
-    requi2 = int(requi2_entry.get()) if requi2_entry.get() else None
-    requi3 = int(requi3_entry.get()) if requi3_entry.get() else None
-    requi4 = int(requi4_entry.get()) if requi4_entry.get() else None
-    semest = int(semest_entry.get())
-
     try:
-        plan_creado = crear_plan(clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
-        if plan_creado ==0:
-            messagebox.showerror("Error", "No se pudo insertar el plan")
-            return
-        else:   
-            messagebox.showinfo("Éxito", "Plan insertado correctamente")
-            mostrar_planes_db()
+        clave = clave_entry.get()
+        carrera = int(carrera_entry.get())
+        materia = int(materia_entry.get())
+        fecha_alta = fecha_alta_entry.get()
+        fechabaja = fechabaja_entry.get() or None
+        area = area_entry.get() or None
+        reqsim = int(reqsim_entry.get()) if reqsim_entry.get() else None
+        requi1 = int(requi1_entry.get()) if requi1_entry.get() else None
+        requi2 = int(requi2_entry.get()) if requi2_entry.get() else None
+        requi3 = int(requi3_entry.get()) if requi3_entry.get() else None
+        requi4 = int(requi4_entry.get()) if requi4_entry.get() else None
+        semest = int(semest_entry.get())
+
+        try:
+            plan_creado = crear_plan(clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
+            if plan_creado ==0:
+                messagebox.showerror("Error", "No se pudo insertar el plan")
+                return
+            else:   
+                messagebox.showinfo("Éxito", "Plan insertado correctamente")
+                mostrar_planes_db()
+        except Exception as e:
+            messagebox.showerror("Error", f"No se pudo insertar el plan: {e}")
     except Exception as e:
-        messagebox.showerror("Error", f"No se pudo insertar el plan: {e}")
-    
+        messagebox.showerror("Error", f"Error al insertar el plan: {e}")
+        
 
 def actualizar_plan_check():
-    clave = clave_entry_a.get()
-    carrera = int(carrera_entry_a.get())
-    materia = int(materia_entry_a.get())
-    fecha_alta = fecha_alta_entry_a.get()
-    fechabaja = fechabaja_entry_a.get() or None
-    area = area_entry_a.get() or None
-    reqsim = int(reqsim_entry_a.get()) if reqsim_entry_a.get() else None
-    requi1 = int(requi1_entry_a.get()) if requi1_entry_a.get() else None
-    requi2 = int(requi2_entry_a.get()) if requi2_entry_a.get() else None
-    requi3 = int(requi3_entry_a.get()) if requi3_entry_a.get() else None
-    requi4 = int(requi4_entry_a.get()) if requi4_entry_a.get() else None
-    semest = int(semest_entry_a.get())
-
-    plan_id = get_planID(carrera, materia)
     try:
-        plan_creado = actualizar_plan(plan_id,clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
-        if plan_creado ==0:
-            messagebox.showerror("Error", "No se pudo actualizar el plan")
-            return
-        else:   
-            messagebox.showinfo("Éxito", "Plan actualizado correctamente")
-            mostrar_planes_db()
+        clave = clave_entry_a.get()
+        carrera = int(carrera_entry_a.get())
+        materia = int(materia_entry_a.get())
+        fecha_alta = fecha_alta_entry_a.get()
+        fechabaja = fechabaja_entry_a.get() or None
+        area = area_entry_a.get() or None
+        reqsim = int(reqsim_entry_a.get()) if reqsim_entry_a.get() else None
+        requi1 = int(requi1_entry_a.get()) if requi1_entry_a.get() else None
+        requi2 = int(requi2_entry_a.get()) if requi2_entry_a.get() else None
+        requi3 = int(requi3_entry_a.get()) if requi3_entry_a.get() else None
+        requi4 = int(requi4_entry_a.get()) if requi4_entry_a.get() else None
+        semest = int(semest_entry_a.get())
+
+        plan_id = get_planID(carrera, materia)
+        try:
+            plan_creado = actualizar_plan(plan_id,clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
+            if plan_creado ==0:
+                messagebox.showerror("Error", "No se pudo actualizar el plan")
+                return
+            else:   
+                messagebox.showinfo("Éxito", "Plan actualizado correctamente")
+                mostrar_planes_db()
+        except Exception as e:
+            messagebox.showerror("Error", f"No se pudo actualizar el plan: {e}")
     except Exception as e:
-        messagebox.showerror("Error", f"No se pudo actualizar el plan: {e}")
+        messagebox.showerror("Error", f"Error al actualizar el plan: {e}")
+
+
+
 def eliminar_plan_ui():
+    try:
+
     # Obtener la carrera y la materia ingresadas por el usuario
-    carrera = int(eliminar_carrera_entry.get())
-    materia = int(eliminar_materia_entry.get())
+        carrera = int(eliminar_carrera_entry.get())
+        materia = int(eliminar_materia_entry.get())
 
-    # Obtener el ID del plan
-    print(carrera, materia)
-    plan_id = get_planID(carrera, materia)
-    print(plan_id)
+        # Obtener el ID del plan
+        print(carrera, materia)
+        plan_id = get_planID(carrera, materia)
+        print(plan_id)
 
-    if plan_id:
-        # Eliminar el plan
-        eliminar_plan(plan_id)
-        messagebox.showinfo("Éxito", "Plan eliminado correctamente")
-        # Actualizar la vista de los planes
-        mostrar_planes_db()
-    else:
-        messagebox.showerror("Error", "No se encontró ningún plan con la carrera y materia especificadas")
-
+        if plan_id:
+            # Eliminar el plan
+            eliminar_plan(plan_id)
+            messagebox.showinfo("Éxito", "Plan eliminado correctamente")
+            # Actualizar la vista de los planes
+            mostrar_planes_db()
+        else:
+            messagebox.showerror("Error", "No se encontró ningún plan con la carrera y materia especificadas")
+    except Exception as e:
+        messagebox.showerror("Error", f"Error al eliminar el plan: {e}")
 
 # Crear ventana principal
 root = tk.Tk()
