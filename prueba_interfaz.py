@@ -82,8 +82,9 @@ def actualizar_plan():
     requi4 = int(requi4_entry_a.get()) if requi4_entry_a.get() else None
     semest = int(semest_entry_a.get())
 
+    plan_id = get_planID(carrera, materia)
     try:
-        plan_creado = actualizar_plan(clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
+        plan_creado = actualizar_plan(plan_id,clave, carrera, materia, fecha_alta, fechabaja, area, reqsim, requi1, requi2, requi3, requi4, semest)
         if plan_creado ==0:
             messagebox.showerror("Error", "No se pudo actualizar el plan")
             return
