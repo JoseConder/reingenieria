@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
-from crud import crear_plan, mostrar_planes,eliminar_plan,get_planID
+from crud import crear_plan, mostrar_planes,eliminar_plan,get_planID, actualizar_plan
 from pymongo import MongoClient
 
 def mostrar_planes_db():
@@ -68,7 +68,7 @@ def insertar_plan():
         messagebox.showerror("Error", f"No se pudo insertar el plan: {e}")
     
 
-def actualizar_plan():
+def actualizar_plan_check():
     clave = clave_entry.get()
     carrera = int(carrera_entry_a.get())
     materia = int(materia_entry_a.get())
@@ -185,7 +185,7 @@ requi3_entry_a = crear_label_entry_actualizar("Requisito 3:")
 requi4_entry_a = crear_label_entry_actualizar("Requisito 4:")
 semest_entry_a = crear_label_entry_actualizar("Semestre:")
 
-insertar_btn = tk.Button(actualizar_frame, text="Actualizar plan", command=actualizar_plan)
+insertar_btn = tk.Button(actualizar_frame, text="Actualizar plan", command=actualizar_plan_check)
 insertar_btn.pack(pady=5)
 
 # Pestaña para Eliminar Plan (vacía por ahora)
